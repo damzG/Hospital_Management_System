@@ -1,7 +1,7 @@
 package model;
 
 public class Doctor {
-    private static  int doctorId;
+    private  int doctorId;
     private String name;
     private String specialization;
 

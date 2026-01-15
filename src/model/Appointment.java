@@ -9,8 +9,7 @@ public class Appointment {
     private LocalDate appointment_date;
     private String status;
 
-    public Appointment(int id, Patient patient, Doctor doctor, LocalDate appDate, String status){
-        this.appointmentId = id;
+    public Appointment( Patient patient, Doctor doctor, LocalDate appDate, String status){
         this.patient = patient;
         this.doctor = doctor;
         this.appointment_date = appDate;

@@ -4,57 +4,103 @@ import model.Patient;
 
 import java.sql.*;
 
+import util.DBconnect;
+
+
 import static util.DBconnect.*;
 
 
 public class PatientDAO {
-    private DriverManager DBConnection;
     //CRUD Template - Create, Read, Update Delete
 
     //Create patient data
-    public void addPatient(Patient patient) throws SQLException {
+    public static void addPatient(Patient patient) throws SQLException {
 
         String sql = """
-        INSERT INTO patient (name, dob, phone, address)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO patient (name, dob, phone, address, gender)
+        VALUES (?, ?, ?, ?, ?)
         """;
 
 
-        Connection conn = DBConnection.getConnection(URL, USER, PASSWORD);
-        PreparedStatement stmt = conn.prepareStatement(sql);
+       try(Connection conn = DBconnect.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql);){
+           stmt.setString(1, patient.getName());
+           stmt.setDate(2, Date.valueOf(patient.getDob()));
+           stmt.setString(3, patient.getPhone());
+           stmt.setString(4, patient.getAddress());
+           stmt.setString(5, patient.getGender());
 
-        stmt.setString(1, patient.getName());
-        stmt.setDate(2, Date.valueOf(patient.getDob()));
-        stmt.setString(3, patient.getPhone());
-        stmt.setString(4, patient.getAddress());
+           int rows = stmt.executeUpdate();
+           System.out.println(rows + " patient inserted successfully.");
 
-        stmt.executeUpdate();
+
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       }
     }
 
     //Read or retrieve patient details
-    public Patient getPatientById(int id) throws SQLException {
+    public static void getPatientById(int id) throws SQLException {
 
         String sql = "SELECT * FROM patient WHERE patient_id = ?";
 
-        Connection conn = DBConnection.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = DBconnect.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, id);
+            ){
 
-        ResultSet rs = stmt.executeQuery();
+            stmt.setInt(1, id);
+            try(ResultSet rs = stmt.executeQuery();){
+                if (rs.next()) {
+                    System.out.println(
+                                    rs.getInt("patient_id") + " | " +
+                                    rs.getString("name") + " | " +
+                                    rs.getDate("dob").toLocalDate() + " | " +
+                                    rs.getString("phone") + " | " +
+                                    rs.getString("address") );
+                }
+                else {
+                    System.out.println("Patient not found.");
+                }
+            }
 
-        if (rs.next()) {
-            Patient p = new Patient();
-            p.setPatientId(rs.getInt("patient_id"));
-            p.setName(rs.getString("name"));
-            p.setDob(rs.getDate("dob").toLocalDate());
-            p.setPhone(rs.getString("phone"));
-            p.setAddress(rs.getString("address"));
-            return p;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        return null;
     }
 
-    //Next is to be able to update patient details and delete patient details
+    //update patient details e.g Patient address
+
+    public static void updatePatientAddress(int id, String newAddress){
+
+        String sql = "UPDATE patient SET address = ? WHERE patient_id = ?";
+
+        try(
+                Connection conn = DBconnect.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+                ){
+            stmt.setString(1, newAddress);
+            stmt.setInt(2, id);
+
+            int rows = stmt.executeUpdate();
+            System.out.println(rows + " updated");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void removePatient(int id){
+        String sql = "DELETE FROM patient WHERE patient_id = ?";
+
+        try(Connection conn = DBconnect.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql)
+            ){
+            stmt.setInt(1, id);
+            int rows = stmt.executeUpdate();
+            System.out.println(rows + " patient deleted successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
 }
