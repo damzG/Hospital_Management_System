@@ -4,26 +4,26 @@ import java.time.LocalDate;
 
 public class PatientHistory {
     private int historyId;
-    private Patient patient;
+    private int patientId;
     private LocalDate visitDate;
     private String diagnosis;
     private String notes;
 
-    public PatientHistory(int id, Patient patient, LocalDate visitDate, String diagnosis, String notes){
+    public PatientHistory(int id, int patientId, LocalDate visitDate, String diagnosis, String notes){
         this.historyId = id;
-        this.patient = patient;
+        this.patientId = patientId;
         this.visitDate = visitDate;
         this.diagnosis = diagnosis;
         this.notes = notes;
     }
 
 
-    public Patient getPatient() {
-        return patient;
+    public int getPatient() {
+        return patientId;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatient(int patientId) {
+        this.patientId = patientId;
     }
 
     public LocalDate getVisitDate() {
@@ -48,5 +48,13 @@ public class PatientHistory {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public int getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(int historyId) {
+        this.historyId = historyId;
     }
 }
