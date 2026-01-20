@@ -48,4 +48,12 @@ public class Prescription {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    public int getPrescription_id() {
+        return prescription_id;
+    }
+
+    public void setPrescription_id(int prescription_id) {
+        this.prescription_id = prescription_id;
+    }
 }
