@@ -10,8 +10,10 @@ public class MainMenuScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+//        Set the layout of the entire frame
         setLayout(new BorderLayout());
 
+//        Efficient use of methods
         add(createHeader(), BorderLayout.NORTH);
         add(createMenu(), BorderLayout.CENTER);
 

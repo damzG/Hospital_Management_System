@@ -1,14 +1,14 @@
 package service;
 
 
-import ui.MainMenuScreen;
 
-
+import ui.PatientRegistrationScreen;
 
 
 
 public class TrialApp {
     public static void main(String[] args){
-       new MainMenuScreen();
+        PatientRegistrationScreen patientRegistrationScreen = new PatientRegistrationScreen();
+        patientRegistrationScreen.setVisible(true);
     }
 }
