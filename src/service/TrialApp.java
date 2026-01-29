@@ -2,13 +2,13 @@ package service;
 
 
 
-import ui.PatientRegistrationScreen;
+import ui.AppointmentScreen;
+
 
 
 
 public class TrialApp {
     public static void main(String[] args){
-        PatientRegistrationScreen patientRegistrationScreen = new PatientRegistrationScreen();
-        patientRegistrationScreen.setVisible(true);
+        new AppointmentScreen().setVisible(true);
     }
 }
