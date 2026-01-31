@@ -1,14 +1,11 @@
 package service;
 
-
-
-import ui.AppointmentScreen;
-
+import ui.MainMenuScreen;
 
 
 
 public class TrialApp {
     public static void main(String[] args){
-        new AppointmentScreen().setVisible(true);
+        new MainMenuScreen().setVisible(true);
     }
 }
