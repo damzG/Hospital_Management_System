@@ -1,5 +1,8 @@
 package ui;
 
+import dao.PatientDAO;
+import model.Patient;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Date;
@@ -8,10 +11,11 @@ import java.time.ZoneId;
 
 public class PatientRegistrationScreen extends JFrame {
 
-    private JTextField usernameField;
-    private JTextField phoneField;
-    private JTextField addressField;
-    private JSpinner dobSpinner;
+    private final JTextField usernameField;
+    private final JTextField phoneField;
+    private final JTextField addressField;
+    private final JSpinner dobSpinner;
+    private final JComboBox<String> genderCombo;
 
     public PatientRegistrationScreen(){
         setTitle("BioSpark Patient Registration ");
@@ -20,13 +24,17 @@ public class PatientRegistrationScreen extends JFrame {
         setLocationRelativeTo(null);
 
         //        Layout form
-        JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));
+        JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
         setLayout(new BorderLayout());
 
+        JLabel title = new JLabel("Patient Registration", SwingConstants.CENTER);
+        title.setFont(new Font("SansSerif", Font.BOLD, 18));
+        add(title, BorderLayout.NORTH);
 
 
-//       Registration form
+
+//       Registration form font
         Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
 
 //        Patient Name
@@ -69,6 +77,14 @@ public class PatientRegistrationScreen extends JFrame {
         addressField.setFont(labelFont);
         addressField.setPreferredSize(new Dimension(200, 28));
 
+//        Patient Gender
+        JLabel genderLabel = new JLabel("Gender: ");
+        genderLabel.setFont(labelFont);
+
+        genderCombo = new JComboBox<>(new String[]{"Male", "Female", "Other"});
+        genderCombo.setFont(labelFont);
+
+
 //        Register, Clear and Cancel Button
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
@@ -108,6 +124,8 @@ public class PatientRegistrationScreen extends JFrame {
         formPanel.add(phoneField);
         formPanel.add(patientAddress);
         formPanel.add(addressField);
+        formPanel.add(genderLabel);
+        formPanel.add(genderCombo);
         buttonPanel.add(registerBtn);
         buttonPanel.add(clearBtn);
         buttonPanel.add(cancelBtn);
@@ -124,6 +142,7 @@ public class PatientRegistrationScreen extends JFrame {
         String name = usernameField.getText().trim();
         String phone = phoneField.getText().trim();
         String address = addressField.getText().trim();
+        String gender = (String) genderCombo.getSelectedItem();
 
         if(name.isEmpty() || phone.isEmpty() || address.isEmpty()){
             JOptionPane.showMessageDialog(
@@ -147,20 +166,35 @@ public class PatientRegistrationScreen extends JFrame {
         }
 
 //        Extract DOB Properly
-        Date dobDate = (Date) dobSpinner.getValue();
+        java.util.Date dobDate = (java.util.Date) dobSpinner.getValue();
         LocalDate dob = dobDate.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
 
 //        TEMP success feedback (backend)
-        JOptionPane.showMessageDialog(
-                this,
-                "Patient registered successfully!",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+        try{
+            Patient patient = new Patient(name, dob, phone, address, gender);
+            PatientDAO.addPatient(patient);
 
-        clearForm(); //optional: reset after success
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Patient registered successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            clearForm(); //reset after success
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error saving patient",
+                    "Database Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+
     }
 
     private void clearForm(){
@@ -168,6 +202,7 @@ public class PatientRegistrationScreen extends JFrame {
         phoneField.setText("");
         addressField.setText("");
         dobSpinner.setValue(new java.util.Date());
+        genderCombo.setSelectedIndex(0);
     }
 
     private void handleCancel(){

@@ -22,7 +22,19 @@ public class Patient {
 
     }
 
+    public Patient(int patientId, String name, LocalDate dob, String phone, String address, String gender) {
+        this.patientId = patientId;
+        this.name = name;
+        this.dob = dob;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+    }
 
+
+    public int getId(){
+        return patientId;
+    }
     public String getName() {
         return name;
     }
@@ -69,5 +81,9 @@ public class Patient {
 
     public int getPatientId() {
         return patientId;
+    }
+
+    public String toString(){
+        return name + " (" + patientId + ")";
     }
 }

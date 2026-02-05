@@ -1,5 +1,10 @@
 package ui;
 
+import dao.AppointmentDAO;
+import dao.PatientDAO;
+import model.Appointment;
+import model.Patient;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -88,12 +93,24 @@ public class AppointmentScreen extends JFrame{
         }
 
         //TEMP success (backend later)
-        JOptionPane.showMessageDialog(
-                this,
-                "Appointment booked successfully!",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+        try{
+//            Appointment appointment = new Appointment(patientBox, doctorBox, timeSlotBox, "Booked");
+            JComboBox<Patient> patientCombo = new JComboBox<>();
+            for (Patient p : PatientDAO.getAllActivePatients()){
+                patientCombo.addItem(p);
+            }
+            Patient selectedPatient = (Patient) patientCombo.getSelectedItem();
+            int patientId = selectedPatient.getId();
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Appointment booked successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void handleCancel(){

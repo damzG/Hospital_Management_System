@@ -3,6 +3,8 @@ package dao;
 import model.Patient;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import util.DBconnect;
 
@@ -42,7 +44,7 @@ public class PatientDAO {
     //Read or retrieve patient details
     public static void getPatientById(int id) throws SQLException {
 
-        String sql = "SELECT * FROM patient WHERE patient_id = ?";
+        String sql = "SELECT * FROM patient WHERE patient_id = ? AND status = 'ACTIVE'";
 
         try (Connection conn = DBconnect.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -68,6 +70,32 @@ public class PatientDAO {
         }
     }
 
+//    Patient List
+    public static List<Patient> getAllActivePatients()throws  SQLException{
+
+
+        List<Patient> patientList = new ArrayList<>();
+        String sql = "SELECT * FROM patient WHERE status = 'ACTIVE'";
+
+        try(Connection conn = DBconnect.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()){
+        while(rs.next()){
+            patientList.add(new Patient(
+                    rs.getInt("patient_id"),
+                    rs.getString("name"),
+                    rs.getDate("dob").toLocalDate(),
+                    rs.getString("phone"),
+                    rs.getString("address"),
+                    rs.getString("gender")
+            ));
+        }
+            return patientList;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //update patient details e.g Patient address
 
     public static void updatePatientAddress(int id, String newAddress){
@@ -88,15 +116,16 @@ public class PatientDAO {
         }
     }
 
-    public static void removePatient(int id){
-        String sql = "DELETE FROM patient WHERE patient_id = ?";
+    //Instead of delete the patient, set another column in the table as Status - active/inactive
+    public static void deactivatePatient(int id){
+        String sql = "UPDATE patient SET status='INACTIVE' WHERE patient_id=?";
 
         try(Connection conn = DBconnect.getConnection();
                PreparedStatement stmt = conn.prepareStatement(sql)
             ){
             stmt.setInt(1, id);
             int rows = stmt.executeUpdate();
-            System.out.println(rows + " patient deleted successfully.");
+            System.out.println(rows + " patient deleted successfully. (Inactive)");
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

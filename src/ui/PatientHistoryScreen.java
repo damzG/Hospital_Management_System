@@ -1,7 +1,13 @@
 package ui;
 
+import dao.PatientDAO;
+import model.Patient;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.List;
 
 public class PatientHistoryScreen extends JFrame {
 
@@ -35,19 +41,36 @@ public class PatientHistoryScreen extends JFrame {
         return panel;
     }
 
-    private JScrollPane createTablePanel(){
-        String[] columns = {"Visit Date", "Diagnosis", "Notes"};
+    private JScrollPane createTablePanel() {
 
-        Object[][] data = {
-                {"2024-03-12", "Flu", "Prescribed rest and fluids"},
-                {"2024-06-01", "Check-up", "All vitals normal"}
-        };
+        String[] columns = {"ID", "Name", "DOB", "Phone", "Gender"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
 
-        historyTable = new JTable(data, columns);
-        historyTable.setEnabled(false); //read-only
+        try {
+            List<Patient> patients = PatientDAO.getAllActivePatients();
+
+            for (Patient p : patients) {
+                model.addRow(new Object[]{
+                        p.getId(),
+                        p.getName(),
+                        p.getDob(),
+                        p.getPhone(),
+                        p.getGender()
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error loading patient data",
+                    "Database Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        historyTable = new JTable(model);
+        historyTable.setEnabled(false);
 
         return new JScrollPane(historyTable);
     }
+
 
     private JPanel createButtonPanel(){
         JPanel panel = new JPanel();
