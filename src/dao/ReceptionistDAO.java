@@ -99,8 +99,8 @@ public class ReceptionistDAO {
         }
 
         //Resigned Receptionist
-    public static void removeReceptionist(int id){
-        String sql = "DELETE FROM receptionist WHERE receptionist_id = ?";
+    public static void deactivateReceptionist(int id){
+        String sql = "UPDATE receptionist SET status = 'INACTIVE' WHERE receptionist_id = ?";
 
         try(Connection conn = DBconnect.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)

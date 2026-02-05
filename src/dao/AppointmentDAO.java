@@ -105,9 +105,9 @@ public class AppointmentDAO {
     }
 
 
-    public static void deleteAppointment(int appointmentId) {
+    public static void deactivateAppointment(int appointmentId) {
 
-        String sql = "DELETE FROM appointment WHERE appointment_id = ?";
+        String sql = "UPDATE appointment SET status = 'INACTIVE' WHERE appointment_id = ?";
 
         try (Connection conn = DBconnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -117,7 +117,7 @@ public class AppointmentDAO {
             int rows = stmt.executeUpdate();
 
             if (rows > 0) {
-                System.out.println("Appointment deleted successfully.");
+                System.out.println("Appointment deleted successfully. (Inactive)");
             } else {
                 System.out.println("Appointment not found.");
             }
@@ -126,6 +126,5 @@ public class AppointmentDAO {
             e.printStackTrace();
         }
     }
-
 
 }

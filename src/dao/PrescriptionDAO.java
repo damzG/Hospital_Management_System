@@ -97,9 +97,9 @@ public class PrescriptionDAO {
     }
 
 
-    public static void removePrescription(int prescription_id){
+    public static void deactivatePrescription(int prescription_id){
 
-            String sql = "DELETE FROM prescription WHERE prescription_id = ?";
+            String sql = "UPDATE prescription SET status = 'INACTIVE' WHERE prescription_id = ?";
 
             try (Connection conn = DBconnect.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -109,7 +109,7 @@ public class PrescriptionDAO {
                 int rows = stmt.executeUpdate();
 
                 if (rows > 0) {
-                    System.out.println("Prescription data deleted successfully.");
+                    System.out.println("Prescription data deleted successfully. (Inactive)");
                 } else {
                     System.out.println("Prescription data not found.");
                 }
@@ -118,6 +118,5 @@ public class PrescriptionDAO {
                 e.printStackTrace();
             }
     }
-
 
 }

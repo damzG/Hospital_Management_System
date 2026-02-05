@@ -62,9 +62,9 @@ import java.time.LocalDate;public class PatientHistoryDAO {
     }
 
 
-    public static void deleteHistory(int historyId) {
+    public static void deactivateHistory(int historyId) {
 
-        String sql = "DELETE FROM patient_history WHERE history_id = ?";
+        String sql = "UPDATE patient_history SET status = 'INACTIVE' WHERE history_id = ?";
 
         try (Connection conn = DBconnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

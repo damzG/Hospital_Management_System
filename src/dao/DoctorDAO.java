@@ -74,16 +74,16 @@ public class DoctorDAO {
         }
     }
 
-    //Remove Doctor -> Doctor leaves of gets fired
+    //Deactivate Doctor -> Doctor leaves of gets fired but history is still left in the DB
     public static void removeDoctor(int id){
-        String sql = "DELETE FROM doctor WHERE doctor_id = ?";
+        String sql = "UPDATE doctor SET status = 'INACTIVE' WHERE doctor_id = ?";
 
         try(Connection conn = DBconnect.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)
         ){
             stmt.setInt(1, id);
             int rows = stmt.executeUpdate();
-            System.out.println(rows + " patient deleted successfully.");
+            System.out.println(rows + " patient deleted successfully. (Inactive)");
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
