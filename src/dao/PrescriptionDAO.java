@@ -1,5 +1,6 @@
 package dao;
 
+import model.Prescription;
 import util.DBconnect;
 
 import java.sql.*;
@@ -8,32 +9,28 @@ import java.time.LocalDate;
 public class PrescriptionDAO {
     //CRUD
 
-    //Create Presciption Data
-    public static void addPrescription(
-            LocalDate dateValue,
-            int patientId,
-            int doctorId
-    ) {
+    //Create Prescription Data
+
+    public static void addPrescription(Prescription p) throws SQLException {
 
         String sql = """
-        INSERT INTO appointment
-        ( patient_id, doctor_id, entryDate, notes)
-        VALUES (?, ?, ?, ?)
+            INSERT INTO prescription
+            (patient_id, doctor_id, entry_date, diagnosis, notes)
+            VALUES (?, ?, ?, ?, ?)
         """;
 
         try (Connection conn = DBconnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, patientId);
-            stmt.setInt(2, doctorId);
-            stmt.setTimestamp(3, Timestamp.valueOf(dateValue.atStartOfDay()));
-            stmt.setString(4, "Antibiotics is ready for use");
+            stmt.setInt(1, p.getPatientId());
+            stmt.setInt(2, p.getDoctorId());
+            stmt.setDate(3, java.sql.Date.valueOf(p.getDate()));
+            stmt.setString(4, p.getDiagnosis());
+            stmt.setString(5, p.getNotes());
 
             stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
     }
 
     public static void retrievePrescription(int prescription_id){

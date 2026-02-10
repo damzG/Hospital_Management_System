@@ -171,7 +171,7 @@ public class PatientRegistrationScreen extends JFrame {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
 
-//        TEMP success feedback (backend)
+//        Success feedback (backend)
         try{
             Patient patient = new Patient(name, dob, phone, address, gender);
             PatientDAO.addPatient(patient);

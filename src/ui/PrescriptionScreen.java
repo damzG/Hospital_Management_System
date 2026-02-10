@@ -1,16 +1,26 @@
 package ui;
 
+import dao.DoctorDAO;
+import dao.PatientDAO;
+import dao.PrescriptionDAO;
+import model.Doctor;
+import model.Patient;
+import model.Prescription;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class PrescriptionScreen extends JFrame{
 
     //        Attributes
-    private JComboBox<String> patientBox;
+    private JComboBox<Patient> patientBox;
+    private JComboBox<Doctor> doctorBox;
     private JTextField diagnosisField;
     private JTextArea notesArea;
+    private JSpinner dateSpinner;
 
-    public PrescriptionScreen(){
+    public PrescriptionScreen() throws SQLException {
         setTitle("BioSpark Prescription Entry");
         setSize(600, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,15 +43,28 @@ public class PrescriptionScreen extends JFrame{
         return panel;
     }
 
-    private JPanel createForm(){
-        JPanel panel = new JPanel(new GridLayout(3,2,10,10));
+    private JPanel createForm() throws SQLException {
+        JPanel panel = new JPanel(new GridLayout(0,2,10,10));
         panel.setBorder(BorderFactory.createEmptyBorder(20,30,20, 30));
 
         panel.add(new JLabel("Select Patient: "));
         patientBox = new JComboBox<>();
-        patientBox.addItem("John Doe");
-        patientBox.addItem("Jane Smith");
+        for (Patient p : PatientDAO.getAllActivePatients()){
+            patientBox.addItem(p);
+        }
         panel.add(patientBox);
+
+        panel.add(new JLabel("Select Doctor: "));
+        doctorBox = new JComboBox<>();
+        for (Doctor d : DoctorDAO.getAllActiveDoctors()){
+            doctorBox.addItem(d);
+        }
+        panel.add(doctorBox);
+
+        panel.add(new JLabel("Entry Date: "));
+        dateSpinner = new JSpinner(new SpinnerDateModel());
+        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "dd-MM-yyyy"));
+        panel.add(dateSpinner);
 
         panel.add(new JLabel("Diagnosis: "));
         diagnosisField = new JTextField();
@@ -78,8 +101,9 @@ public class PrescriptionScreen extends JFrame{
 
     private void handleSave(){
         if(patientBox.getSelectedItem() == null ||
-        diagnosisField.getText().trim().isEmpty() ||
-        notesArea.getText().trim().isEmpty()){
+                doctorBox.getSelectedItem() == null ||
+                diagnosisField.getText().trim().isEmpty() ||
+                notesArea.getText().trim().isEmpty()){
             JOptionPane.showMessageDialog(
                     this,
                     "All fields are required",
@@ -107,8 +131,43 @@ public class PrescriptionScreen extends JFrame{
                 JOptionPane.INFORMATION_MESSAGE
         );
 
-        clearForm();
+        try{
+            Patient patient = (Patient) patientBox.getSelectedItem();
+            Doctor doctor = (Doctor) doctorBox.getSelectedItem();
 
+            java.util.Date utilDate = (java.util.Date) dateSpinner.getValue();
+            java.time.LocalDate entryDate = utilDate
+                    .toInstant()
+                    .atZone(java.time.ZoneId.systemDefault())
+                    .toLocalDate();
+
+            Prescription prescription = new Prescription(
+                    patient.getId(),
+                    doctor.getId(),
+                    entryDate,
+                    diagnosisField.getText().trim(),
+                    notesArea.getText().trim()
+            );
+
+            PrescriptionDAO.addPrescription(prescription);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Prescription saved successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            clearForm(); //reset after success
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error saving prescription",
+                    "Database Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     private void clearForm(){

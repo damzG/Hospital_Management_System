@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class MainMenuScreen extends JFrame {
     public MainMenuScreen(){
@@ -47,7 +48,11 @@ public class MainMenuScreen extends JFrame {
         JButton appBtn = createMenuButton("Appointments");
         appBtn.addActionListener(e -> {
             dispose();
-            new AppointmentScreen().setVisible(true);
+            try {
+                new AppointmentScreen().setVisible(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         JButton patientHistoryBtn = createMenuButton("Medical Records");
@@ -59,7 +64,17 @@ public class MainMenuScreen extends JFrame {
         JButton prescribeBtn = createMenuButton("Prescriptions");
         prescribeBtn.addActionListener(e -> {
             dispose();
-            new PrescriptionScreen().setVisible(true);
+            try {
+                new PrescriptionScreen().setVisible(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        JButton doctorBtn = createMenuButton("Doctor");
+        doctorBtn.addActionListener(e -> {
+            dispose();
+            new DoctorRegistrationScreen().setVisible(true);
         });
 
 
@@ -68,6 +83,7 @@ public class MainMenuScreen extends JFrame {
         menu.add(patientHistoryBtn);
         menu.add(prescribeBtn);
         menu.add(createMenuButton("Extras"));
+        menu.add(doctorBtn);
 
         return menu;
     }

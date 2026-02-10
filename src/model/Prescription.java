@@ -3,57 +3,28 @@ package model;
 import java.time.LocalDate;
 
 public class Prescription {
-    private int prescription_id;
-    private Patient patient;
-    private Doctor doctor;
-    private LocalDate entryDate;
+
+    private int prescriptionId;   // DB-generated
+    private int patientId;
+    private int doctorId;
+    private LocalDate date;
+    private String diagnosis;
     private String notes;
 
-    public Prescription(int id, Patient patient, Doctor doctor, LocalDate entryDate, String notes){
-        this.prescription_id = id;
-        this.patient = patient;
-        this.doctor = doctor;
-        this.entryDate = entryDate;
+    // Constructor for CREATE
+    public Prescription(int patientId, int doctorId,
+                        LocalDate date, String diagnosis, String notes) {
+        this.patientId = patientId;
+        this.doctorId = doctorId;
+        this.date = date;
+        this.diagnosis = diagnosis;
         this.notes = notes;
     }
 
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-
-    public LocalDate getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public int getPrescription_id() {
-        return prescription_id;
-    }
-
-    public void setPrescription_id(int prescription_id) {
-        this.prescription_id = prescription_id;
-    }
+    // Getters
+    public int getPatientId() { return patientId; }
+    public int getDoctorId() { return doctorId; }
+    public LocalDate getDate() { return date; }
+    public String getDiagnosis() { return diagnosis; }
+    public String getNotes() { return notes; }
 }

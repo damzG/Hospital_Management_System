@@ -84,6 +84,6 @@ public class Patient {
     }
 
     public String toString(){
-        return name + " (" + patientId + ")";
+        return name + " (ID: " + patientId + ")";
     }
 }

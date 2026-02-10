@@ -10,9 +10,19 @@ public class Doctor {
         this.specialization = specialization;
     }
 
+    public Doctor(int doctorId, String name, String spec){
+        this.doctorId = doctorId;
+        this.name = name;
+        this.specialization = spec;
+    }
+
 
     public String getName() {
         return name;
+    }
+
+    public int getId(){
+        return doctorId;
     }
 
     public void setName(String name) {
@@ -25,5 +35,10 @@ public class Doctor {
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
+    }
+
+
+    public String toString(){
+        return name + " (" + doctorId + ")";
     }
 }

@@ -4,6 +4,8 @@ import model.Doctor;
 import util.DBconnect;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DoctorDAO {
 
@@ -21,7 +23,7 @@ public class DoctorDAO {
             stmt.setString(2, doctor.getSpecialization());
 
             int rows = stmt.executeUpdate();
-            System.out.println(rows + " patient inserted successfully.");
+            System.out.println(rows + " doctor inserted successfully.");
 
 
         } catch (Exception e) {
@@ -30,26 +32,26 @@ public class DoctorDAO {
     }
 
     //Read or retrieve doctor details
-    public static void getDoctorById(int id) throws SQLException {
-
-        String sql = "SELECT * FROM doctor WHERE doctor_id = ?";
+    public static List<Doctor> getAllActiveDoctors() throws SQLException {
+        List<Doctor> doctorList = new ArrayList<>();
+        String sql = "SELECT * FROM doctor WHERE status = 'ACTIVE'";
 
         try (Connection conn = DBconnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
         ){
-            stmt.setInt(1, id);
             try(ResultSet rs = stmt.executeQuery();){
                 if (rs.next()) {
-                    System.out.println(
-                            rs.getInt("doctor_id") + " | " +
-                                    rs.getString("name") + " | " +
-                                    rs.getString("specialization") );
+                    doctorList.add(new Doctor(
+                            rs.getInt("doctor_id"),
+                            rs.getString("name"),
+                            rs.getString("specialization")
+                    ));
                 }
                 else {
                     System.out.println("Doctor not found.");
                 }
             }
-
+            return doctorList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

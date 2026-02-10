@@ -1,21 +1,26 @@
 package ui;
 
 import dao.AppointmentDAO;
+import dao.DoctorDAO;
 import dao.PatientDAO;
 import model.Appointment;
+import model.Doctor;
 import model.Patient;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class AppointmentScreen extends JFrame{
 
-    private JComboBox<String> patientBox;
-    private JComboBox<String> doctorBox;
+    private JComboBox<Patient> patientBox;
+    private JComboBox<Doctor> doctorBox;
     private JComboBox<String> timeSlotBox;
     private JSpinner dateSpinner;
 
-    public AppointmentScreen(){
+    public AppointmentScreen() throws SQLException {
         setTitle("BioSpark Appointment Booking");
         setSize(550, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,16 +33,22 @@ public class AppointmentScreen extends JFrame{
         setVisible(true);
     }
 
-    private JPanel createForm(){
+    private JPanel createForm() throws SQLException {
         JPanel panel = new JPanel(new GridLayout(4,2,10,10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
         panel.add(new JLabel("Patient: "));
         patientBox = new JComboBox<>();
+        for (Patient p : PatientDAO.getAllActivePatients()){
+            patientBox.addItem(p);
+        }
         panel.add(patientBox);
 
         panel.add(new JLabel("Doctor: "));
         doctorBox = new JComboBox<>();
+        for(Doctor d : DoctorDAO.getAllActiveDoctors()){
+            doctorBox.addItem(d);
+        }
         panel.add(doctorBox);
 
         panel.add(new JLabel("Date: "));
@@ -46,7 +57,8 @@ public class AppointmentScreen extends JFrame{
         panel.add(dateSpinner);
 
         panel.add(new JLabel("Time Slot: "));
-        timeSlotBox = new JComboBox<>();
+        String[] timeSlots = {"09:00", "09:30", "10:00", "10:30", "11:00", "11:30"};
+        timeSlotBox = new JComboBox<>(timeSlots);
         panel.add(timeSlotBox);
 
         return panel;
@@ -92,22 +104,30 @@ public class AppointmentScreen extends JFrame{
             return;
         }
 
-        //TEMP success (backend later)
+        //Success connection to backend
         try{
-//            Appointment appointment = new Appointment(patientBox, doctorBox, timeSlotBox, "Booked");
-            JComboBox<Patient> patientCombo = new JComboBox<>();
-            for (Patient p : PatientDAO.getAllActivePatients()){
-                patientCombo.addItem(p);
-            }
-            Patient selectedPatient = (Patient) patientCombo.getSelectedItem();
-            int patientId = selectedPatient.getId();
+            int patientId = ((Patient) patientBox.getSelectedItem()).getId();
+            int doctorId = ((Doctor) doctorBox.getSelectedItem()).getId();
+            java.util.Date appDate = (java.util.Date) dateSpinner.getValue();
+            LocalDate finalappDate = appDate.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            LocalDate date = finalappDate;
+            String timeSlot = timeSlotBox.getSelectedItem().toString();
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Appointment booked successfully!",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            if(!AppointmentDAO.isDoctorAvailable(doctorId, date, timeSlot)){
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Doctor is already booked",
+                        "Booking Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            Appointment appt = new Appointment(patientId, doctorId, finalappDate, timeSlot);
+            AppointmentDAO.addAppointment(appt);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

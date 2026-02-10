@@ -4,33 +4,35 @@ import java.time.LocalDate;
 
 public class Appointment {
     private int appointmentId;
-    private Patient patient;
-    private Doctor doctor;
+    private int patientId;
+    private int doctorId;
     private LocalDate appointment_date;
     private String status;
+    private String timeSlot;
 
-    public Appointment( Patient patient, Doctor doctor, LocalDate appDate, String status){
-        this.patient = patient;
-        this.doctor = doctor;
+    public Appointment( int patient, int doctor, LocalDate appDate, String timeSlot){
+        this.patientId = patient;
+        this.doctorId = doctor;
         this.appointment_date = appDate;
-        this.status = status;
+        this.status = "ACTIVE"; //prevent double booking
+        this.timeSlot = timeSlot;
     }
 
 
-    public Patient getPatient() {
-        return patient;
+    public int getPatientID() {
+        return patientId;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatient(int patient) {
+        this.patientId = patient;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public int getDoctorID() {
+        return doctorId;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctorId(int doctor) {
+        this.doctorId = doctor;
     }
 
     public LocalDate getAppointment_date() {
@@ -55,5 +57,13 @@ public class Appointment {
 
     public void setAppointmentId(int appointmentId) {
         this.appointmentId = appointmentId;
+    }
+
+    public String getTimeSlot() {
+        return timeSlot;
+    }
+
+    public void setTimeSlot(String timeSlot) {
+        this.timeSlot = timeSlot;
     }
 }
