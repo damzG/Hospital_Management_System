@@ -2,7 +2,6 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 public class WelcomeScreen extends JFrame {
     public WelcomeScreen(){
@@ -50,11 +49,7 @@ public class WelcomeScreen extends JFrame {
         continueBtn.setFocusPainted(false);
         continueBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        continueBtn.addActionListener(e -> {
-            new LoginScreen().setVisible(true);
-            dispose(); // closes WelcomeScreen
-        });
-
         add(continueBtn, BorderLayout.SOUTH);
+
     }
 }

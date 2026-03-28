@@ -7,6 +7,6 @@ import ui.WelcomeScreen;
 
 public class TrialApp {
     public static void main(String[] args){
-        new MainMenuScreen().setVisible(true);
+        new WelcomeScreen().setVisible(true);
     }
 }

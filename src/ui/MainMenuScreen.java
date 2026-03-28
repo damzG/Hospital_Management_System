@@ -31,6 +31,7 @@ public class MainMenuScreen extends JFrame {
         title.setFont(new Font("SansSerif", Font.BOLD, 18));
         title.setForeground(Color.WHITE);
 
+
         header.add(title);
         return header;
     }
@@ -58,7 +59,11 @@ public class MainMenuScreen extends JFrame {
         JButton patientHistoryBtn = createMenuButton("Medical Records");
         patientHistoryBtn.addActionListener(e -> {
             dispose();
-            new PatientHistoryScreen().setVisible(true);
+            try {
+                new PatientHistoryScreen().setVisible(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         JButton prescribeBtn = createMenuButton("Prescriptions");
@@ -115,10 +120,5 @@ public class MainMenuScreen extends JFrame {
                 "Confirm Logout",
                 JOptionPane.YES_NO_OPTION
         );
-
-        if(choice == JOptionPane.YES_OPTION){
-            dispose();
-            new LoginScreen().setVisible(true);
-        }
     }
 }

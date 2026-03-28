@@ -8,6 +8,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.FileInputStream;
 import java.sql.*;
+import java.util.Base64;
 import java.util.Properties;
 
 public class ReceptionistDAO {
@@ -16,7 +17,7 @@ public class ReceptionistDAO {
     public static void addReceptionist(Receptionist rec) throws SQLException {
         String sql = """
         INSERT INTO receptionist (name, email, phone, username, password, salt)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?)
         """;
 
         try(Connection conn = DBconnect.getConnection();
@@ -25,13 +26,17 @@ public class ReceptionistDAO {
             stmt.setString(2, rec.getEmail());
             stmt.setString(3, rec.getPhone());
             stmt.setString(4, rec.getUsername());
+//            Hashing original password
             byte[] salt = PasswordUtil.generateSalt();
+            String saltString = Base64.getEncoder().encodeToString(salt);
+
             String hashedPassword = PasswordUtil.hashPassword(
                     rec.getPassword().toCharArray(), salt
             );
 
             //Trial Hashing
             stmt.setString(5, hashedPassword);
+            stmt.setString(6, saltString);
 
             int rows = stmt.executeUpdate();
             System.out.println(rows + " Receptionist newly registered ✓");
@@ -60,8 +65,8 @@ public class ReceptionistDAO {
                                     rs.getString("name") + " | " +
                                     rs.getString("email") + " | " +
                                     rs.getString("phone") + " | " +
-                                    rs.getString("username") + " | " +
-                                    rs.getString("password"));
+                                    rs.getString("username") + " | "
+                                    );
                 }
                 else {
                     System.out.println("Patient not found.");
@@ -84,12 +89,14 @@ public class ReceptionistDAO {
             ){
 
                 byte[] salt = PasswordUtil.generateSalt();
+                String saltString = Base64.getEncoder().encodeToString(salt);
                 String newHashedPassword = PasswordUtil.hashPassword(
                         newPassword.toCharArray(), salt
                 );
 
                 stmt.setString(1, newHashedPassword);
-                stmt.setInt(2, id);
+                stmt.setString(2, saltString);
+                stmt.setInt(3, id);
 
                 int rows = stmt.executeUpdate();
                 System.out.println(rows + " updated");

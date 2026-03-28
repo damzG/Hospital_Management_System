@@ -2,16 +2,20 @@ package dao;
 
 
 import model.PatientHistory;
+import model.Prescription;
 import util.DBconnect;
 
 import java.sql.*;
-import java.time.LocalDate;public class PatientHistoryDAO {
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PatientHistoryDAO {
 
     public static void addHistory(PatientHistory history) {
 
         String sql = """
-            
-                INSERT INTO patient_history (patient_id, visit_date, diagnosis, notes)
+            INSERT INTO patient_history (patient_id, visit_date, diagnosis, notes)
             VALUES (?, ?, ?, ?)
             """;
 
@@ -31,12 +35,20 @@ import java.time.LocalDate;public class PatientHistoryDAO {
         }
     }
 
-    public static void getHistoryByPatientId(int patientId) {
+    public static List<Prescription> getHistoryByPatientId(int patientId) throws SQLException {
+
+        List<Prescription> list = new ArrayList<>();
 
         String sql = """
-            SELECT * FROM patient_history
-            WHERE patient_id = ?
-            ORDER BY visit_date DESC
+            SELECT p.entry_date,
+                   d.name AS doctor_name,
+                   p.diagnosis,
+                   p.notes
+            FROM prescription p
+            INNER JOIN doctor d 
+                ON p.doctor_id = d.doctor_id
+            WHERE p.patient_id = ?
+            ORDER BY p.entry_date DESC
             """;
 
         try (Connection conn = DBconnect.getConnection();
@@ -46,18 +58,21 @@ import java.time.LocalDate;public class PatientHistoryDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-
-                    System.out.println(
-                            rs.getInt("history_id") + " | " +
-                                    rs.getDate("visit_date").toLocalDate() + " | " +
-                                    rs.getString("diagnosis") + " | " +
+                            Prescription pres = new Prescription(
+                                    patientId,
+                                    0,
+                                    rs.getDate("entry_date").toLocalDate(),
+                                    rs.getString("diagnosis"),
                                     rs.getString("notes")
-                    );
+                            );
+                            list.add(pres);
                 }
             }
-
+            return list;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw e;
         }
     }
 

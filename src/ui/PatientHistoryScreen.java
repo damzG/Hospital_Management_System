@@ -1,7 +1,11 @@
 package ui;
 
 import dao.PatientDAO;
+import dao.PatientHistoryDAO;
+import dao.PrescriptionDAO;
 import model.Patient;
+import model.PatientHistory;
+import model.Prescription;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,10 +15,11 @@ import java.util.List;
 
 public class PatientHistoryScreen extends JFrame {
 
-    private JComboBox<String> patientList;
+    private JComboBox<Patient> patientList;
     private JTable historyTable;
+    private int patientId;
 
-    public PatientHistoryScreen(){
+    public PatientHistoryScreen() throws SQLException {
         setTitle("BioSpark Patient History (View Only) ");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,42 +33,57 @@ public class PatientHistoryScreen extends JFrame {
 
     }
 
-    private JPanel createTopPanel(){
+    private JPanel createTopPanel() throws SQLException {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
         panel.add(new JLabel("Select Patient: "));
 
+//        List of patients from the database
         patientList = new JComboBox<>();
-        patientList.addItem("John Doe");
-        patientList.addItem("Jane Smith");
+        for(Patient p : PatientDAO.getAllActivePatients()){
+            patientList.addItem(p);
+        }
+
+//        Load history from patient history table
+        JButton loadBtn = new JButton("Load History");
+        loadBtn.addActionListener(e -> loadHistory());
 
         panel.add(patientList);
+        panel.add(loadBtn);
 
         return panel;
     }
 
-    private JScrollPane createTablePanel() {
+    private void loadHistory(){
 
-        String[] columns = {"ID", "Name", "DOB", "Phone", "Gender"};
-        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        Patient selected = (Patient) patientList.getSelectedItem();
 
-        try {
-            List<Patient> patients = PatientDAO.getAllActivePatients();
+        if (selected == null) return;
 
-            for (Patient p : patients) {
+        try{
+            List<Prescription>  history = PatientHistoryDAO.getHistoryByPatientId(selected.getId());
+            DefaultTableModel model = (DefaultTableModel) historyTable.getModel();
+
+            model.setRowCount(0); //clear old data
+
+            for (Prescription p : history){
                 model.addRow(new Object[]{
-                        p.getId(),
-                        p.getName(),
-                        p.getDob(),
-                        p.getPhone(),
-                        p.getGender()
+                        p.getDate(),
+                        p.getDiagnosis(),
+                        p.getNotes()
                 });
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error loading patient data",
-                    "Database Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error loading patient history"
+            );
         }
+    }
+
+    private JScrollPane createTablePanel() throws SQLException {
+
+        String[] columns = {"entry_date", "diagnosis", "notes"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         historyTable = new JTable(model);
         historyTable.setEnabled(false);
