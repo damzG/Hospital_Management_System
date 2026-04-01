@@ -2,15 +2,41 @@ package model;
 
 import java.time.LocalDate;
 
+/**
+ * Represents a patient registered in the hospital management system.
+ * Stores personal details including contact information and demographics.
+ */
 public class Patient {
+
+    /** Unique identifier for this patient (DB-generated). */
     private int patientId;
+
+    /** Full name of the patient. */
     private String name;
+
+    /** Date of birth of the patient. */
     private LocalDate dob;
+
+    /** Contact phone number of the patient. */
     private String phone;
+
+    /** Residential address of the patient. */
     private String address;
+
+    /** Gender of the patient (e.g., "Male", "Female", "Other"). */
     private String gender;
 
-    public Patient( String name, LocalDate dob, String phone, String address, String gender){
+    /**
+     * Constructs a new Patient without an ID.
+     * Used when registering a new patient (ID is assigned by the database).
+     *
+     * @param name    the patient's full name
+     * @param dob     the patient's date of birth
+     * @param phone   the patient's phone number
+     * @param address the patient's address
+     * @param gender  the patient's gender
+     */
+    public Patient(String name, LocalDate dob, String phone, String address, String gender) {
         this.name = name;
         this.dob = dob;
         this.phone = phone;
@@ -18,10 +44,23 @@ public class Patient {
         this.gender = gender;
     }
 
-    public Patient(){
+    /**
+     * Default no-argument constructor.
+     * Required for frameworks or manual field-by-field construction.
+     */
+    public Patient() {}
 
-    }
-
+    /**
+     * Constructs a Patient with all fields populated.
+     * Used when loading an existing patient record from the database.
+     *
+     * @param patientId the patient's unique ID
+     * @param name      the patient's full name
+     * @param dob       the patient's date of birth
+     * @param phone     the patient's phone number
+     * @param address   the patient's address
+     * @param gender    the patient's gender
+     */
     public Patient(int patientId, String name, LocalDate dob, String phone, String address, String gender) {
         this.patientId = patientId;
         this.name = name;
@@ -31,59 +70,66 @@ public class Patient {
         this.gender = gender;
     }
 
+    /**
+     * Returns the patient's unique ID.
+     *
+     * @return the patient ID
+     */
+    public int getId() { return patientId; }
 
-    public int getId(){
-        return patientId;
-    }
-    public String getName() {
-        return name;
-    }
+    /**
+     * Returns the patient ID (alias for {@link #getId()}).
+     *
+     * @return the patient ID
+     */
+    public int getPatientId() { return patientId; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
+    /**
+     * Sets the patient's unique ID (typically assigned by the database).
+     *
+     * @param patientId the ID to assign
+     */
     public void setPatientId(int patientId) {
-        patientId++;
+        this.patientId = patientId; // BUG FIX: was `patientId++` which never assigned
     }
 
-    public int getPatientId() {
-        return patientId;
-    }
+    /** @return the patient's full name */
+    public String getName() { return name; }
 
-    public String toString(){
+    /** @param name the new name */
+    public void setName(String name) { this.name = name; }
+
+    /** @return the patient's date of birth */
+    public LocalDate getDob() { return dob; }
+
+    /** @param dob the new date of birth */
+    public void setDob(LocalDate dob) { this.dob = dob; }
+
+    /** @return the patient's phone number */
+    public String getPhone() { return phone; }
+
+    /** @param phone the new phone number */
+    public void setPhone(String phone) { this.phone = phone; }
+
+    /** @return the patient's address */
+    public String getAddress() { return address; }
+
+    /** @param address the new address */
+    public void setAddress(String address) { this.address = address; }
+
+    /** @return the patient's gender */
+    public String getGender() { return gender; }
+
+    /** @param gender the new gender */
+    public void setGender(String gender) { this.gender = gender; }
+
+    /**
+     * Returns a human-readable representation of the patient.
+     *
+     * @return a string in the format "Name (ID: X)"
+     */
+    @Override
+    public String toString() {
         return name + " (ID: " + patientId + ")";
     }
 }

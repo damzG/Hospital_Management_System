@@ -18,6 +18,7 @@ public class PatientRegistrationScreen extends JFrame {
     private final JComboBox<String> genderCombo;
 
     public PatientRegistrationScreen(){
+
         setTitle("BioSpark Patient Registration ");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,9 +33,7 @@ public class PatientRegistrationScreen extends JFrame {
         title.setFont(new Font("SansSerif", Font.BOLD, 18));
         add(title, BorderLayout.NORTH);
 
-
-
-//       Registration form font
+//      Registration form font
         Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
 
 //        Patient Name
@@ -193,7 +192,6 @@ public class PatientRegistrationScreen extends JFrame {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-
 
     }
 
