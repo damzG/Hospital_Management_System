@@ -6,6 +6,7 @@ import dao.PatientDAO;
 import model.Appointment;
 import model.Doctor;
 import model.Patient;
+import model.Receptionist;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,12 +16,18 @@ import java.time.ZoneId;
 
 public class AppointmentScreen extends JFrame{
 
+    /** Kept so it can be passed back to MainMenuScreen on cancel. */
+    private final Receptionist receptionist;
+
     private JComboBox<Patient> patientBox;
     private JComboBox<Doctor> doctorBox;
     private JComboBox<String> timeSlotBox;
     private JSpinner dateSpinner;
 
-    public AppointmentScreen() throws SQLException {
+    public AppointmentScreen(Receptionist receptionist) throws SQLException {
+
+        this.receptionist = receptionist; //store it
+
         setTitle("BioSpark Appointment Booking");
         setSize(550, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -144,7 +151,7 @@ public class AppointmentScreen extends JFrame{
 
         if(choice == JOptionPane.YES_OPTION){
             dispose();
-            new MainMenuScreen().setVisible(true);
+            new MainMenuScreen(receptionist).setVisible(true);
         }
     }
 }

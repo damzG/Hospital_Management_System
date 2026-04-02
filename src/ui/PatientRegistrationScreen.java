@@ -2,6 +2,7 @@ package ui;
 
 import dao.PatientDAO;
 import model.Patient;
+import model.Receptionist;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,13 +12,18 @@ import java.time.ZoneId;
 
 public class PatientRegistrationScreen extends JFrame {
 
+    /** Kept so it can be passed back to MainMenuScreen on cancel. */
+    private final Receptionist receptionist;
+
+
     private final JTextField usernameField;
     private final JTextField phoneField;
     private final JTextField addressField;
     private final JSpinner dobSpinner;
     private final JComboBox<String> genderCombo;
 
-    public PatientRegistrationScreen(){
+    public PatientRegistrationScreen(Receptionist receptionist){
+        this.receptionist = receptionist; // store it
 
         setTitle("BioSpark Patient Registration ");
         setSize(500, 400);
@@ -213,7 +219,7 @@ public class PatientRegistrationScreen extends JFrame {
 
         if (choice == JOptionPane.YES_OPTION){
             dispose(); //close current window
-            new MainMenuScreen().setVisible(true);
+            new MainMenuScreen(receptionist).setVisible(true);
         }
     }
 

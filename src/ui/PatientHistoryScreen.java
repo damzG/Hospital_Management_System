@@ -6,6 +6,7 @@ import dao.PrescriptionDAO;
 import model.Patient;
 import model.PatientHistory;
 import model.Prescription;
+import model.Receptionist;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,11 +16,17 @@ import java.util.List;
 
 public class PatientHistoryScreen extends JFrame {
 
+    /** Kept so it can be passed back to MainMenuScreen on cancel. */
+    private final Receptionist receptionist;
+
+
     private JComboBox<Patient> patientList;
     private JTable historyTable;
     private int patientId;
 
-    public PatientHistoryScreen() throws SQLException {
+    public PatientHistoryScreen(Receptionist receptionist) throws SQLException {
+        this.receptionist = receptionist;
+
         setTitle("BioSpark Patient History (View Only) ");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,7 +37,6 @@ public class PatientHistoryScreen extends JFrame {
         add(createButtonPanel(), BorderLayout.SOUTH);
 
         setVisible(true);
-
     }
 
     private JPanel createTopPanel() throws SQLException {
@@ -98,7 +104,7 @@ public class PatientHistoryScreen extends JFrame {
 
         backBtn.addActionListener(e -> {
             dispose();
-            new MainMenuScreen().setVisible(true);
+            new MainMenuScreen(receptionist).setVisible(true);
         });
 
         panel.add(backBtn);

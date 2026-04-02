@@ -1,6 +1,7 @@
 package model;
 
 public class Receptionist {
+
     private int receptionistId;
     private String name;
     private String email;
@@ -8,8 +9,13 @@ public class Receptionist {
     private String username;
     private String password;
 
-    public Receptionist(int id, String name, String email, String phone, String username, String password){
-        this.receptionistId = id;
+    // Default constructor
+    public Receptionist() {}
+
+    // Parameterized constructor
+    public Receptionist(int receptionistId, String name, String email,
+                        String phone, String username, String password) {
+        this.receptionistId = receptionistId;
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -17,6 +23,14 @@ public class Receptionist {
         this.password = password;
     }
 
+    // Getters and Setters
+    public int getReceptionistId() {
+        return receptionistId;
+    }
+
+    public void setReceptionistId(int receptionistId) {
+        this.receptionistId = receptionistId;
+    }
 
     public String getName() {
         return name;
@@ -56,5 +70,16 @@ public class Receptionist {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Receptionist{" +
+                "receptionistId=" + receptionistId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", username='" + username + '\'' +
+                '}';
     }
 }

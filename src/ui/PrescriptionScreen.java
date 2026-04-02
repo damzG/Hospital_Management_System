@@ -6,12 +6,16 @@ import dao.PrescriptionDAO;
 import model.Doctor;
 import model.Patient;
 import model.Prescription;
+import model.Receptionist;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
 public class PrescriptionScreen extends JFrame{
+
+    /** Kept so it can be passed back to MainMenuScreen on cancel. */
+    private final Receptionist receptionist;
 
     //        Attributes
     private JComboBox<Patient> patientBox;
@@ -20,7 +24,10 @@ public class PrescriptionScreen extends JFrame{
     private JTextArea notesArea;
     private JSpinner dateSpinner;
 
-    public PrescriptionScreen() throws SQLException {
+    public PrescriptionScreen(Receptionist receptionist) throws SQLException {
+
+        this.receptionist = receptionist; // store it
+
         setTitle("BioSpark Prescription Entry");
         setSize(600, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -185,7 +192,8 @@ public class PrescriptionScreen extends JFrame{
 
         if(choice == JOptionPane.YES_OPTION){
             dispose();
-            new MainMenuScreen().setVisible(true);
+
+            new MainMenuScreen(receptionist).setVisible(true);
         }
     }
 }

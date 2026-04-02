@@ -1,11 +1,18 @@
 package ui;
 
+import model.Receptionist;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
 public class MainMenuScreen extends JFrame {
-    public MainMenuScreen(){
+    /** The logged-in receptionist — used for the welcome message. */
+    private final Receptionist receptionist;
+
+    public MainMenuScreen(Receptionist receptionist){
+        this.receptionist = receptionist;
+
         setTitle("BioSpark HMS Menu");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,12 +34,21 @@ public class MainMenuScreen extends JFrame {
         header.setBackground(new Color(30, 144, 255)); //medical blue
         header.setBorder(BorderFactory.createEmptyBorder(15,10,15,10));
 
+//        Title
         JLabel title = new JLabel("BioSpark Hospital Management System");
         title.setFont(new Font("SansSerif", Font.BOLD, 18));
         title.setForeground(Color.WHITE);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
 
+//        Welcome message - shows the receptionist's name
+        JLabel welcome = new JLabel("Welcome, " + receptionist.getName() + " ✓");
+        welcome.setFont(new Font("SansSerif", Font.ITALIC, 13));
+        welcome.setForeground(new Color(220, 240, 255)); // lighter blue-white
+        welcome.setHorizontalAlignment(SwingConstants.CENTER);
 
-        header.add(title);
+        header.add(title, BorderLayout.CENTER);
+        header.add(welcome, BorderLayout.SOUTH);
+
         return header;
     }
 
@@ -43,14 +59,14 @@ public class MainMenuScreen extends JFrame {
         JButton patientBtn = createMenuButton("Patients");
         patientBtn.addActionListener(e -> {
             dispose();
-            new PatientRegistrationScreen().setVisible(true);
+            new PatientRegistrationScreen(receptionist).setVisible(true);
         });
 
         JButton appBtn = createMenuButton("Appointments");
         appBtn.addActionListener(e -> {
             dispose();
             try {
-                new AppointmentScreen().setVisible(true);
+                new AppointmentScreen(receptionist).setVisible(true);
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -60,7 +76,7 @@ public class MainMenuScreen extends JFrame {
         patientHistoryBtn.addActionListener(e -> {
             dispose();
             try {
-                new PatientHistoryScreen().setVisible(true);
+                new PatientHistoryScreen(receptionist).setVisible(true);
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -70,7 +86,7 @@ public class MainMenuScreen extends JFrame {
         prescribeBtn.addActionListener(e -> {
             dispose();
             try {
-                new PrescriptionScreen().setVisible(true);
+                new PrescriptionScreen(receptionist).setVisible(true);
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -79,7 +95,7 @@ public class MainMenuScreen extends JFrame {
         JButton doctorBtn = createMenuButton("Doctor");
         doctorBtn.addActionListener(e -> {
             dispose();
-            new DoctorRegistrationScreen().setVisible(true);
+            new DoctorRegistrationScreen(receptionist).setVisible(true);
         });
 
 
@@ -120,5 +136,10 @@ public class MainMenuScreen extends JFrame {
                 "Confirm Logout",
                 JOptionPane.YES_NO_OPTION
         );
+
+        if(choice == JOptionPane.YES_OPTION){
+            dispose();
+            new LoginScreen().setVisible(true);
+        }
     }
 }

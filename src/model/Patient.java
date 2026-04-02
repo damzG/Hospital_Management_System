@@ -6,6 +6,7 @@ import java.time.LocalDate;
  * Represents a patient registered in the hospital management system.
  * Stores personal details including contact information and demographics.
  */
+
 public class Patient {
 
     /** Unique identifier for this patient (DB-generated). */
@@ -25,6 +26,8 @@ public class Patient {
 
     /** Gender of the patient (e.g., "Male", "Female", "Other"). */
     private String gender;
+
+    private Receptionist receptionistId;
 
     /**
      * Constructs a new Patient without an ID.
@@ -62,6 +65,15 @@ public class Patient {
      * @param gender    the patient's gender
      */
     public Patient(int patientId, String name, LocalDate dob, String phone, String address, String gender) {
+        this.patientId = patientId;
+        this.name = name;
+        this.dob = dob;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+    }
+
+    public Patient(String name, LocalDate dob, String phone, String address, String gender, Receptionist receptionistId) {
         this.patientId = patientId;
         this.name = name;
         this.dob = dob;

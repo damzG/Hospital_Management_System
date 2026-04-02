@@ -4,6 +4,7 @@ import dao.DoctorDAO;
 import dao.PatientDAO;
 import model.Doctor;
 import model.Patient;
+import model.Receptionist;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +13,17 @@ import java.time.ZoneId;
 
 public class DoctorRegistrationScreen extends JFrame {
 
+    /** Kept so it can be passed back to MainMenuScreen on cancel. */
+    private final Receptionist receptionist;
+
     private final  JTextField doctorNameField;
     private final JTextField specialization;
 
 
-    public DoctorRegistrationScreen(){
+    public DoctorRegistrationScreen(Receptionist receptionist){
+
+        this.receptionist = receptionist; //store it
+
         setTitle("BioSpark Doctor Registration");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -163,7 +170,7 @@ public class DoctorRegistrationScreen extends JFrame {
 
         if (choice == JOptionPane.YES_OPTION){
             dispose(); //close current window
-            new MainMenuScreen().setVisible(true);
+            new MainMenuScreen(receptionist).setVisible(true);
         }
     }
 
