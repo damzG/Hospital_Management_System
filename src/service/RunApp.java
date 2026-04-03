@@ -1,9 +1,10 @@
+//Oyindamola Olaosun C00313475 OOSD Project
+
 package service;
 
-import ui.LoginScreen;
 import ui.WelcomeScreen;
 
-public class TrialApp {
+public class RunApp {
     public static void main(String[] args){
         new WelcomeScreen().setVisible(true);
     }

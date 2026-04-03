@@ -1,10 +1,10 @@
+//Oyindamola Olaosun C00313475 OOSD Project
+
 package ui;
 
 import dao.PatientDAO;
 import dao.PatientHistoryDAO;
-import dao.PrescriptionDAO;
 import model.Patient;
-import model.PatientHistory;
 import model.Prescription;
 import model.Receptionist;
 

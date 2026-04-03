@@ -1,15 +1,30 @@
+//Oyindamola Olaosun C00313475 OOSD Project
+
 package dao;
 
 import model.Prescription;
 import util.DBconnect;
 
 import java.sql.*;
-import java.time.LocalDate;
+
+/**
+ * Data Access Object for the {@code prescription} table.
+ * Handles all CRUD operations for Prescription records.
+ * Prescriptions are soft-deleted by setting status to {@code INACTIVE}.
+ */
 
 public class PrescriptionDAO {
     //CRUD
-
     //Create Prescription Data
+
+    /**
+     * Inserts a new prescription record into the database.
+     * The {@code prescription_id} is assigned automatically by the database.
+     *
+     * @param p the {@link Prescription} object containing patient ID, doctor ID,
+     *          date, diagnosis, and notes
+     * @throws SQLException if a database error occurs during insert
+     */
 
     public static void addPrescription(Prescription p) throws SQLException {
 
@@ -32,6 +47,14 @@ public class PrescriptionDAO {
         }
 
     }
+
+    /**
+     * Retrieves and prints a single prescription by its ID.
+     * Joins the {@code patient} and {@code doctor} tables to display
+     * names instead of raw foreign key IDs.
+     *
+     * @param prescription_id the ID of the prescription to retrieve
+     */
 
     public static void retrievePrescription(int prescription_id){
         String sql = """
@@ -69,6 +92,13 @@ public class PrescriptionDAO {
         }
     }
 
+    /**
+     * Updates the clinical notes on an existing prescription.
+     *
+     *
+     * @param prescriptionId the ID of the prescription to update
+     * @param newNotes       the revised notes to store
+     */
     public static void updatePrescriptionNotes(
             int prescriptionId,
             String newNotes
@@ -93,7 +123,13 @@ public class PrescriptionDAO {
         }
     }
 
-
+    /**
+     * Deactivates a prescription by setting its status to {@code INACTIVE}.
+     * This is a soft delete — the record remains in the database for
+     * audit and medical history purposes.
+     *
+     * @param prescription_id the ID of the prescription to deactivate
+     */
     public static void deactivatePrescription(int prescription_id){
 
             String sql = "UPDATE prescription SET status = 'INACTIVE' WHERE prescription_id = ?";

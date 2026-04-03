@@ -1,3 +1,4 @@
+//Oyindamola Olaosun C00313475 OOSD Project
 package ui;
 
 import model.Receptionist;
@@ -5,7 +6,7 @@ import model.Receptionist;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.net.URI;
+
 
 /**
  * Displays educational medical reference images in a scrollable grid.
