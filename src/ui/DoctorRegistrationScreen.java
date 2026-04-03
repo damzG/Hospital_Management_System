@@ -138,7 +138,7 @@ public class DoctorRegistrationScreen extends JFrame {
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Patient registered successfully!",
+                    "Doctor registered successfully!",
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE
             );
@@ -173,6 +173,5 @@ public class DoctorRegistrationScreen extends JFrame {
             new MainMenuScreen(receptionist).setVisible(true);
         }
     }
-
 
 }

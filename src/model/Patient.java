@@ -27,7 +27,7 @@ public class Patient {
     /** Gender of the patient (e.g., "Male", "Female", "Other"). */
     private String gender;
 
-    private Receptionist receptionistId;
+    private int receptionistId;
 
     /**
      * Constructs a new Patient without an ID.
@@ -73,13 +73,14 @@ public class Patient {
         this.gender = gender;
     }
 
-    public Patient(String name, LocalDate dob, String phone, String address, String gender, Receptionist receptionistId) {
+    public Patient(String name, LocalDate dob, String phone, String address, String gender, int receptionistId) {
         this.patientId = patientId;
         this.name = name;
         this.dob = dob;
         this.phone = phone;
         this.address = address;
         this.gender = gender;
+        this.receptionistId = receptionistId;
     }
 
     /**
@@ -88,6 +89,9 @@ public class Patient {
      * @return the patient ID
      */
     public int getId() { return patientId; }
+
+    public int    getReceptionistId() { return receptionistId; }
+    public void setReceptionistId(int receptionistId) { this.receptionistId = receptionistId; }
 
     /**
      * Returns the patient ID (alias for {@link #getId()}).
@@ -144,4 +148,5 @@ public class Patient {
     public String toString() {
         return name + " (ID: " + patientId + ")";
     }
+
 }

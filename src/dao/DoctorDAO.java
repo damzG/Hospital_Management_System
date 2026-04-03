@@ -40,15 +40,15 @@ public class DoctorDAO {
              PreparedStatement stmt = conn.prepareStatement(sql);
         ){
             try(ResultSet rs = stmt.executeQuery();){
-                if (rs.next()) {
+                while (rs.next()) {
                     doctorList.add(new Doctor(
                             rs.getInt("doctor_id"),
                             rs.getString("name"),
                             rs.getString("specialization")
                     ));
                 }
-                else {
-                    System.out.println("Doctor not found.");
+                if (doctorList.isEmpty()){
+                    System.out.println("No active doctors found.");
                 }
             }
             return doctorList;

@@ -133,7 +133,7 @@ public class AppointmentScreen extends JFrame{
                 return;
             }
 
-            Appointment appt = new Appointment(patientId, doctorId, finalappDate, timeSlot);
+            Appointment appt = new Appointment(patientId, doctorId, finalappDate, timeSlot, receptionist.getReceptionistId());
             AppointmentDAO.addAppointment(appt);
 
         } catch (Exception e) {

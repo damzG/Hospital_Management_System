@@ -42,9 +42,10 @@ public class MainMenuScreen extends JFrame {
 
 //        Welcome message - shows the receptionist's name
         JLabel welcome = new JLabel("Welcome, " + receptionist.getName() + " ✓");
-        welcome.setFont(new Font("SansSerif", Font.ITALIC, 13));
-        welcome.setForeground(new Color(220, 240, 255)); // lighter blue-white
+        welcome.setFont(new Font("SansSerif", Font.BOLD, 13));
+        welcome.setForeground(Color.WHITE); // lighter blue-white
         welcome.setHorizontalAlignment(SwingConstants.CENTER);
+        welcome.setBorder(BorderFactory.createEmptyBorder(4, 0, 10, 0));
 
         header.add(title, BorderLayout.CENTER);
         header.add(welcome, BorderLayout.SOUTH);
@@ -98,12 +99,18 @@ public class MainMenuScreen extends JFrame {
             new DoctorRegistrationScreen(receptionist).setVisible(true);
         });
 
+        JButton extrasBtn = createMenuButton("Extras");
+        extrasBtn.addActionListener(e -> {
+            dispose();
+            new ExtrasScreen(receptionist).setVisible(true);
+        });
+
 
         menu.add(patientBtn);
         menu.add(appBtn);
         menu.add(patientHistoryBtn);
         menu.add(prescribeBtn);
-        menu.add(createMenuButton("Extras"));
+        menu.add(extrasBtn);
         menu.add(doctorBtn);
 
         return menu;

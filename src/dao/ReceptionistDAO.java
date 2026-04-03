@@ -1,6 +1,5 @@
 package dao;
 
-import model.Patient;
 import model.Receptionist;
 
 import java.sql.*;

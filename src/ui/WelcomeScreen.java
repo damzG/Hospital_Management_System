@@ -49,6 +49,11 @@ public class WelcomeScreen extends JFrame {
         continueBtn.setFocusPainted(false);
         continueBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
+        continueBtn.addActionListener(e -> {
+            dispose();
+            new LoginScreen().setVisible(true);
+        });
+
         add(continueBtn, BorderLayout.SOUTH);
 
     }

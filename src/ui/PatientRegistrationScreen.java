@@ -178,7 +178,7 @@ public class PatientRegistrationScreen extends JFrame {
 
 //        Success feedback (backend)
         try{
-            Patient patient = new Patient(name, dob, phone, address, gender);
+            Patient patient = new Patient(name, dob, phone, address, gender, receptionist.getReceptionistId());
             PatientDAO.addPatient(patient);
 
             JOptionPane.showMessageDialog(
