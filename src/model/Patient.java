@@ -29,6 +29,7 @@ public class Patient {
     /** Gender of the patient (e.g., "Male", "Female", "Other"). */
     private String gender;
 
+    /** ReceptionistId that logins the patient */
     private int receptionistId;
 
     /**
@@ -75,6 +76,17 @@ public class Patient {
         this.gender = gender;
     }
 
+    /**
+     * Constructs a Patient with all fields populated.
+     * Used when loading an existing patient record from the database.
+     *
+     * @param name      the patient's full name
+     * @param dob       the patient's date of birth
+     * @param phone     the patient's phone number
+     * @param address   the patient's address
+     * @param gender    the patient's gender
+     * @param receptionistId the id of the receptionist that logged into the system
+     */
     public Patient(String name, LocalDate dob, String phone, String address, String gender, int receptionistId) {
         this.patientId = patientId;
         this.name = name;
@@ -92,7 +104,18 @@ public class Patient {
      */
     public int getId() { return patientId; }
 
+    /**
+     * Returns the receptionist's unique ID.
+     *
+     * @return the receptionist ID
+     */
     public int    getReceptionistId() { return receptionistId; }
+
+    /**
+     * Returns the patient's unique ID.
+     *
+     * @return the patient ID
+     */
     public void setReceptionistId(int receptionistId) { this.receptionistId = receptionistId; }
 
     /**
@@ -143,7 +166,6 @@ public class Patient {
 
     /**
      * Returns a human-readable representation of the patient.
-     *
      * @return a string in the format "Name (ID: X)"
      */
     @Override

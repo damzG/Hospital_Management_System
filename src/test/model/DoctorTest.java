@@ -13,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class DoctorTest {
 
+    /**
+     * Unit test to set name and specialization (constructor).
+     */
     @Test
     @DisplayName("Two-arg constructor sets name and specialization")
     void testTwoArgConstructor() {
@@ -22,6 +25,9 @@ class DoctorTest {
         assertEquals("Cardiology",     doctor.getSpecialization());
     }
 
+    /**
+     * Unit tests for setting the constructor
+     */
     @Test
     @DisplayName("Full constructor sets all fields")
     void testFullConstructor() {
@@ -32,6 +38,9 @@ class DoctorTest {
         assertEquals("Neurology",        doctor.getSpecialization());
     }
 
+    /**
+     * Unit tests for printing out the patient name and ID.
+     */
     @Test
     @DisplayName("toString returns name and ID")
     void testToString() {
@@ -39,6 +48,9 @@ class DoctorTest {
         assertEquals("Dr. Sarah Lynch (2)", doctor.toString());
     }
 
+    /**
+     * Unit tests for setting the fields correctly
+     */
     @Test
     @DisplayName("Setters update fields correctly")
     void testSetters() {

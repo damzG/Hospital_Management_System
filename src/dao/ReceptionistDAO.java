@@ -8,7 +8,13 @@ import java.sql.*;
 
 import util.DBconnect;
 
+/**
+ * Data Access Object for the {@code receptionist} table.
+ * Handles all CRUD operations for Receptionist records.
+ */
+
 public class ReceptionistDAO {
+
     /**
      * Validates receptionist login credentials against the database.
      * Returns the matching Receptionist object on success, or null if

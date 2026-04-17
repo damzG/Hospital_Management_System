@@ -20,18 +20,27 @@ class DoctorDAOTest {
 
     private Connection conn;
 
+    /**
+     * Test for setting up the database connection
+     */
     @BeforeEach
     void setUp() throws SQLException {
         conn = DBconnect.getConnection();
         conn.setAutoCommit(false);
     }
 
+    /**
+     * Test for tearing down the database connection
+     */
     @AfterEach
     void tearDown() throws SQLException {
         conn.rollback();
         conn.close();
     }
 
+    /**
+     * Test for tearing down the database connection
+     */
     @Test
     @DisplayName("getAllActiveDoctors returns a list using while loop")
     void testGetAllActiveDoctors() throws SQLException {
@@ -41,6 +50,9 @@ class DoctorDAOTest {
         assertTrue(doctors.size() >= 0);
     }
 
+    /**
+     * Test for adding the doctors
+     */
     @Test
     @DisplayName("addDoctor inserts without throwing")
     void testAddDoctor() {
@@ -48,6 +60,9 @@ class DoctorDAOTest {
         assertDoesNotThrow(() -> DoctorDAO.addDoctor(doctor));
     }
 
+    /**
+     * Test for updating doctor's specialization
+     */
     @Test
     @DisplayName("updateDoctorSpecialization does not throw")
     void testUpdateSpec() {
@@ -55,6 +70,9 @@ class DoctorDAOTest {
                 DoctorDAO.updateDoctorSpecialization(9999, "Neurology"));
     }
 
+    /**
+     * Test for removing doctorID
+     */
     @Test
     @DisplayName("removeDoctor does not throw for unknown ID")
     void testRemoveDoctor() {

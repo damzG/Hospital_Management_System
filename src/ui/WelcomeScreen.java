@@ -5,7 +5,15 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * WelcomeScreen class
+ * **/
+
 public class WelcomeScreen extends JFrame {
+
+    /**
+     * WelcomeScreen Constructor
+     * **/
     public WelcomeScreen(){
         setTitle("BioSpark");
         setSize(800, 500);

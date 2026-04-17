@@ -1,7 +1,7 @@
 //Oyindamola Olaosun C00313475 OOSD Project
 
-package dao;
 
+package dao;
 import model.Prescription;
 import util.DBconnect;
 

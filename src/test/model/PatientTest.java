@@ -16,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PatientTest {
 
+    /**
+     * Unit tests for the Patient model.
+     * Tests constructors, getters, setters, and toString.
+     */
     @Test
     @DisplayName("Constructor sets all fields correctly")
     void testConstructorWithReceptionistId() {
@@ -31,6 +35,10 @@ class PatientTest {
         assertEquals(1,                     patient.getReceptionistId());
     }
 
+    /**
+     * Unit tests for the Patient model.
+     * Tests constructors, getters, setters, and toString.
+     */
     @Test
     @DisplayName("Full constructor sets patientId correctly")
     void testFullConstructor() {
@@ -42,6 +50,10 @@ class PatientTest {
         assertEquals("Ciarán Kelly", patient.getName());
     }
 
+    /**
+     * Unit tests for the Patient model.
+     * Tests constructors, getters, setters, and toString.
+     */
     @Test
     @DisplayName("setPatientId assigns correctly")
     void testSetPatientId() {
@@ -50,6 +62,10 @@ class PatientTest {
         assertEquals(10, patient.getPatientId());
     }
 
+    /**
+     * Unit tests for the Patient model.
+     * Tests constructors, getters, setters, and toString.
+     */
     @Test
     @DisplayName("Setters update fields correctly")
     void testSetters() {
@@ -68,6 +84,10 @@ class PatientTest {
         assertEquals(2,                       patient.getReceptionistId());
     }
 
+    /**
+     * Unit tests for the Patient model.
+     * Tests constructors, getters, setters, and toString.
+     */
     @Test
     @DisplayName("toString returns correct format")
     void testToString() {
@@ -78,6 +98,10 @@ class PatientTest {
         assertEquals("Niamh Brennan (ID: 3)", patient.toString());
     }
 
+    /**
+     * Unit tests for the Patient model.
+     * Tests constructors, getters, setters, and toString.
+     */
     @Test
     @DisplayName("Default constructor creates empty patient")
     void testDefaultConstructor() {

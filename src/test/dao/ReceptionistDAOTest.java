@@ -19,18 +19,27 @@ class ReceptionistDAOTest {
 
     private Connection conn;
 
+    /**
+     * Test for setting up the database connection
+     */
     @BeforeEach
     void setUp() throws SQLException {
         conn = DBconnect.getConnection();
         conn.setAutoCommit(false);
     }
 
+    /**
+     * Test for tearing down the database connection
+     */
     @AfterEach
     void tearDown() throws SQLException {
         conn.rollback();
         conn.close();
     }
 
+    /**
+     * Test for logging into the database
+     */
     @Test
     @DisplayName("login returns receptionist for valid credentials")
     void testLoginSuccess() {
@@ -40,6 +49,10 @@ class ReceptionistDAOTest {
         assertEquals("rgb", rec.getUsername());
     }
 
+
+    /**
+     * Test for logging into the database connection
+     */
     @Test
     @DisplayName("login returns null for invalid credentials")
     void testLoginFail() {
@@ -47,12 +60,15 @@ class ReceptionistDAOTest {
         assertNull(rec);
     }
 
+
+    /**
+     * Test for checking if the password is correct/wrong the database connection
+     */
     @Test
     @DisplayName("login returns null for wrong password")
     void testLoginWrongPassword() {
         Receptionist rec = ReceptionistDAO.login("rgb", "wrongpassword");
         assertNull(rec);
     }
-
 
 }

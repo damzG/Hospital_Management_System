@@ -24,6 +24,9 @@ public class PatientHistoryScreen extends JFrame {
     private JTable historyTable;
     private int patientId;
 
+    /**
+     * PatientHistoryScreen Constructor
+     * **/
     public PatientHistoryScreen(Receptionist receptionist) throws SQLException {
         this.receptionist = receptionist;
 
@@ -39,6 +42,9 @@ public class PatientHistoryScreen extends JFrame {
         setVisible(true);
     }
 
+    /**
+     *  Top Panel -> user selects the patient and loads history
+     * **/
     private JPanel createTopPanel() throws SQLException {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
         panel.add(new JLabel("Select Patient: "));
@@ -59,6 +65,9 @@ public class PatientHistoryScreen extends JFrame {
         return panel;
     }
 
+    /**
+     * Loads history from Prescription Table
+     * **/
     private void loadHistory(){
 
         Patient selected = (Patient) patientList.getSelectedItem();
@@ -86,6 +95,9 @@ public class PatientHistoryScreen extends JFrame {
         }
     }
 
+    /**
+     * Creates a table where the entry date, diagnosis and notes are displayed
+     * **/
     private JScrollPane createTablePanel() throws SQLException {
 
         String[] columns = {"entry_date", "diagnosis", "notes"};
@@ -97,7 +109,9 @@ public class PatientHistoryScreen extends JFrame {
         return new JScrollPane(historyTable);
     }
 
-
+    /**
+     * Creates a button panel, where the back button is present and goes back to the main menu
+     * **/
     private JPanel createButtonPanel(){
         JPanel panel = new JPanel();
         JButton backBtn = new JButton("Back to Main Menu");

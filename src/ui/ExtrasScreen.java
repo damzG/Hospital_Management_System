@@ -63,6 +63,10 @@ public class ExtrasScreen extends JFrame {
             }
     };
 
+    /**
+     * ExtrasScreen() - the screen constructor
+     * @param receptionist - the receptionist who is responsible for logging into the system
+     * **/
     public ExtrasScreen(Receptionist receptionist) {
         this.receptionist = receptionist;
 
@@ -79,6 +83,10 @@ public class ExtrasScreen extends JFrame {
 
         setVisible(true);
     }
+
+    /**
+     * createHeader() - the header for the
+     * **/
 
     private JPanel createHeader() {
         JPanel header = new JPanel(new BorderLayout());
@@ -184,6 +192,10 @@ public class ExtrasScreen extends JFrame {
 
         return card;
     }
+
+    /**
+     * Back Button - to go to the previous screen
+     * **/
 
     private JPanel createBackButton() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 16, 10));

@@ -13,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ReceptionistTest {
 
+    /**
+     * Unit tests for the constructor.
+     */
     @Test
     @DisplayName("Constructor sets all fields correctly")
     void testConstructor() {
@@ -26,6 +29,9 @@ class ReceptionistTest {
         assertEquals("rgb",          rec.getUsername());
         assertEquals("cryptonite",   rec.getPassword());
     }
+    /**
+     * Unit tests for setting all the fields correctly
+     */
 
     @Test
     @DisplayName("Setters update all fields correctly")

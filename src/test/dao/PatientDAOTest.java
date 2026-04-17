@@ -22,18 +22,27 @@ class PatientDAOTest {
 
     private Connection conn;
 
+    /**
+     * Test for setting up the database connection
+     */
     @BeforeEach
     void setUp() throws SQLException {
         conn = DBconnect.getConnection();
         conn.setAutoCommit(false); // start transaction — rolls back after each test
     }
 
+    /**
+     * Test for tearing down the database connection
+     */
     @AfterEach
     void tearDown() throws SQLException {
         conn.rollback(); // clean up — no test data left behind
         conn.close();
     }
 
+    /**
+     * Test for adding patient into the database
+     */
     @Test
     @DisplayName("addPatient inserts a record without throwing")
     void testAddPatient() {
@@ -44,6 +53,9 @@ class PatientDAOTest {
         assertDoesNotThrow(() -> PatientDAO.addPatient(patient));
     }
 
+    /**
+     * Test for retrieving all active patients
+     */
     @Test
     @DisplayName("getAllActivePatients returns a non-null list")
     void testGetAllActivePatients() throws SQLException {
@@ -51,6 +63,9 @@ class PatientDAOTest {
         assertNotNull(patients);
     }
 
+    /**
+     * Test for retrieving all active patient into the database
+     */
     @Test
     @DisplayName("getAllActivePatients returns only ACTIVE records")
     void testOnlyActiveReturned() throws SQLException {
@@ -59,6 +74,9 @@ class PatientDAOTest {
         assertTrue(patients instanceof List);
     }
 
+    /**
+     * Test for updating patient address into the database
+     */
     @Test
     @DisplayName("updatePatientAddress does not throw")
     void testUpdateAddress() {
@@ -67,6 +85,9 @@ class PatientDAOTest {
                 PatientDAO.updatePatientAddress(9999, "New Address, Dublin"));
     }
 
+    /**
+     * Test for deactivating patient records
+     */
     @Test
     @DisplayName("deactivatePatient does not throw for unknown ID")
     void testDeactivatePatient() {

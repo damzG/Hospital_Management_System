@@ -14,6 +14,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
+/**
+ * Prescription Screen Class Using the JFrame
+ * **/
 public class PrescriptionScreen extends JFrame{
 
     /** Kept so it can be passed back to MainMenuScreen on cancel. */
@@ -26,6 +29,9 @@ public class PrescriptionScreen extends JFrame{
     private JTextArea notesArea;
     private JSpinner dateSpinner;
 
+    /**
+     * Prescription Screen - Constructor
+     * **/
     public PrescriptionScreen(Receptionist receptionist) throws SQLException {
 
         this.receptionist = receptionist; // store it
@@ -43,6 +49,9 @@ public class PrescriptionScreen extends JFrame{
         setVisible(true);
     }
 
+    /**
+     * The method that sets the screen title
+     * **/
     private JPanel createHeader(){
         JPanel panel = new JPanel();
         JLabel title = new JLabel("Patient Prescription");
@@ -52,6 +61,9 @@ public class PrescriptionScreen extends JFrame{
         return panel;
     }
 
+    /**
+     * The method that sets the form, with the patients, doctor, entry_date, prescription notes, diagnosis
+     * **/
     private JPanel createForm() throws SQLException {
         JPanel panel = new JPanel(new GridLayout(0,2,10,10));
         panel.setBorder(BorderFactory.createEmptyBorder(20,30,20, 30));
@@ -90,6 +102,10 @@ public class PrescriptionScreen extends JFrame{
         return panel;
     }
 
+    /**
+     * The method that sets the buttons using the FlowLayout
+     * Save, Clear and Cancel buttons
+     * **/
     private JPanel createButtons(){
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
@@ -108,6 +124,9 @@ public class PrescriptionScreen extends JFrame{
         return panel;
     }
 
+    /**
+     * Method that saves the prescription screen
+     * **/
     private void handleSave(){
         if(patientBox.getSelectedItem() == null ||
                 doctorBox.getSelectedItem() == null ||
@@ -179,11 +198,17 @@ public class PrescriptionScreen extends JFrame{
         }
     }
 
+    /**
+     * Method that clears the input fields
+     * **/
     private void clearForm(){
         diagnosisField.setText("");
         notesArea.setText("");
     }
 
+    /**
+     * Method that cancels the session of setting prescription
+     * **/
     private void handleCancel(){
         int choice = JOptionPane.showConfirmDialog(
                 this,

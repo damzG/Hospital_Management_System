@@ -9,6 +9,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object for the {@code patient} table.
+ * Handles all CRUD operations for Patient records.
+ * Patients are soft-deleted by setting status to {@code INACTIVE}.
+ */
+
 public class PatientDAO {
 
     /**
@@ -18,6 +24,7 @@ public class PatientDAO {
      * @param patient the patient to insert
      * @throws SQLException if a database error occurs
      */
+
     public static void addPatient(Patient patient) throws SQLException {
         String sql = """
             INSERT INTO patient (name, dob, phone, address, gender, receptionist_id)

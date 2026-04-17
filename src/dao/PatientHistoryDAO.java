@@ -11,8 +11,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object for the {@code patient history} table.
+ * Handles all CRUD operations for Patient history records.
+ */
+
 public class PatientHistoryDAO {
 
+    /**
+     * Inserts a new appointment into the database.
+     * Status is set to "BOOKED" on creation.
+     *
+     * @param history the history to insert
+     */
     public static void addHistory(PatientHistory history) {
 
         String sql = """
@@ -35,6 +46,14 @@ public class PatientHistoryDAO {
             throw new RuntimeException(e);
         }
     }
+
+
+    /**
+     * Retrieves history by patient ID from the database.
+     * Status is set to "BOOKED" on creation.
+     *
+     * @param patientId to retrieve
+     */
 
     public static List<Prescription> getHistoryByPatientId(int patientId) throws SQLException {
 
@@ -77,6 +96,12 @@ public class PatientHistoryDAO {
         }
     }
 
+    /**
+     * Deactivates history by history ID from the database.
+     * Status is set to "INACTIVE" on creation.
+     *
+     * @param historyId to retrieve history data
+     */
 
     public static void deactivateHistory(int historyId) {
 

@@ -3,15 +3,11 @@
 package ui;
 
 import dao.DoctorDAO;
-import dao.PatientDAO;
 import model.Doctor;
-import model.Patient;
 import model.Receptionist;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 public class DoctorRegistrationScreen extends JFrame {
 
@@ -21,7 +17,9 @@ public class DoctorRegistrationScreen extends JFrame {
     private final  JTextField doctorNameField;
     private final JTextField specialization;
 
-
+    /** Doctor Registration Screen
+     * @param receptionist - the receptionist is responsible for logging into the system
+     *  */
     public DoctorRegistrationScreen(Receptionist receptionist){
 
         this.receptionist = receptionist; //store it
@@ -106,6 +104,8 @@ public class DoctorRegistrationScreen extends JFrame {
 
     }
 
+    /** Handle Registration method
+     *  */
     private void handleRegistration(){
         String name = doctorNameField.getText().trim();
         String spec = specialization.getText().trim();
@@ -157,11 +157,17 @@ public class DoctorRegistrationScreen extends JFrame {
         }
     }
 
+    /**
+     * Clearing the Form (if not interested in submission)
+     * **/
     private void clearForm(){
         doctorNameField.setText("");
         specialization.setText("");
     }
 
+    /**
+     * Handling Cancellation
+     * **/
     private void handleCancel(){
         int choice = JOptionPane.showConfirmDialog(
                 this,

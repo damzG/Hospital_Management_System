@@ -14,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class AppointmentTest {
 
+    /**
+     * Test setting appointment to booked
+     */
     @Test
     @DisplayName("Constructor sets status to BOOKED by default")
     void testDefaultStatus() {
@@ -23,6 +26,9 @@ class AppointmentTest {
         assertEquals("BOOKED", appt.getStatus());
     }
 
+    /**
+     * Test setting the appointment correctly
+     */
     @Test
     @DisplayName("Constructor sets all fields correctly")
     void testConstructorFields() {
@@ -36,6 +42,9 @@ class AppointmentTest {
         assertEquals(3,      appt.getReceptionistId());
     }
 
+    /**
+     * Test setting status
+     */
     @Test
     @DisplayName("setStatus updates correctly")
     void testSetStatus() {
@@ -46,6 +55,9 @@ class AppointmentTest {
         assertEquals("CANCELLED", appt.getStatus());
     }
 
+    /**
+     * Test setting appointment correctly
+     */
     @Test
     @DisplayName("setAppointmentId assigns correctly")
     void testSetAppointmentId() {

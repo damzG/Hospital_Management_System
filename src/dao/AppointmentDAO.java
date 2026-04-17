@@ -8,6 +8,12 @@ import util.DBconnect;
 import java.sql.*;
 import java.time.LocalDate;
 
+
+/**
+ * Data Access Object for the {@code appointment} table.
+ * Handles all CRUD operations for Appointment records.
+ */
+
 public class AppointmentDAO {
 
     /**
@@ -16,6 +22,7 @@ public class AppointmentDAO {
      *
      * @param app the appointment to insert
      */
+
     public static void addAppointment(Appointment app) {
         String sql = """
             INSERT INTO appointment
@@ -144,7 +151,7 @@ public class AppointmentDAO {
     }
 
     /**
-     * Cancels an appointment by setting its status to CANCELLED.
+     * Cancels an appointment by setting its status to 'CANCELLED'.
      *
      * @param appointmentId the appointment to cancel
      */

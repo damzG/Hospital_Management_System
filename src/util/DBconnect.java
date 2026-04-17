@@ -4,6 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Point where the project is connected to the database
+ * @author Damola
+ * @version 1.0
+ * **/
+
 public class DBconnect {
 
     public static final String URL =

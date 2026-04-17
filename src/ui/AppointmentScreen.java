@@ -26,6 +26,7 @@ public class AppointmentScreen extends JFrame{
     private JComboBox<String> timeSlotBox;
     private JSpinner dateSpinner;
 
+    /** Appointment Screen Constructor */
     public AppointmentScreen(Receptionist receptionist) throws SQLException {
 
         this.receptionist = receptionist; //store it
@@ -42,6 +43,7 @@ public class AppointmentScreen extends JFrame{
         setVisible(true);
     }
 
+    /** Create form method in the GUI */
     private JPanel createForm() throws SQLException {
         JPanel panel = new JPanel(new GridLayout(4,2,10,10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
@@ -74,6 +76,7 @@ public class AppointmentScreen extends JFrame{
         return panel;
     }
 
+    /** Create buttons in the GUI */
     private JPanel createButtons(){
         JPanel panel = new JPanel(new FlowLayout());
 
@@ -89,7 +92,9 @@ public class AppointmentScreen extends JFrame{
         return panel;
     }
 
+    /** Method for handling bookings in the GUI */
     private void handleBooking(){
+
         if(patientBox.getSelectedItem() == null ||
            doctorBox.getSelectedItem() == null ||
             timeSlotBox.getSelectedItem() == null){
@@ -143,6 +148,7 @@ public class AppointmentScreen extends JFrame{
         }
     }
 
+    /** Handling cancellation in the GUI */
     private void handleCancel(){
         int choice = JOptionPane.showConfirmDialog(
                 this,

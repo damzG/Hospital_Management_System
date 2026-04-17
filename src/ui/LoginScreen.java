@@ -27,6 +27,9 @@ public class LoginScreen extends JFrame{
     private final JButton loginButton;
 
 //    Constructor
+    /**
+     * Login screen() - COnstructor
+     */
     public LoginScreen(){
         setTitle("BioSpark — Login");
         setSize(420, 320);
@@ -44,6 +47,9 @@ public class LoginScreen extends JFrame{
         loginButton = tempLoginBtn;
     }
 
+    /**
+     * The Header with the title
+     */
     private JPanel createHeader(){
         JPanel header = new JPanel();
         header.setBackground(new Color(30, 144, 255));
@@ -115,6 +121,9 @@ public class LoginScreen extends JFrame{
         return wrapper;
     }
 
+    /**
+     * The footer
+     */
     private JPanel createFooter(){
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel note = new JLabel("Authorized personnel only");

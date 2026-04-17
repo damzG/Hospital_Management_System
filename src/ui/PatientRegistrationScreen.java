@@ -12,6 +12,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
+/**
+ * PatientRegistration Class extends JFrame
+ * **/
 public class PatientRegistrationScreen extends JFrame {
 
     /** Kept so it can be passed back to MainMenuScreen on cancel. */
@@ -24,6 +27,7 @@ public class PatientRegistrationScreen extends JFrame {
     private final JSpinner dobSpinner;
     private final JComboBox<String> genderCombo;
 
+    /**PatientRegistrationScreen Constructor **/
     public PatientRegistrationScreen(Receptionist receptionist){
         this.receptionist = receptionist; // store it
 
@@ -145,6 +149,11 @@ public class PatientRegistrationScreen extends JFrame {
 
     }
 
+    /**
+     * Registers the patient details in the database
+     * Submits the form
+     * **/
+
     private void handleRegistration(){
         String name = usernameField.getText().trim();
         String phone = phoneField.getText().trim();
@@ -203,6 +212,9 @@ public class PatientRegistrationScreen extends JFrame {
 
     }
 
+    /**
+     * Clears the form details
+     * **/
     private void clearForm(){
         usernameField.setText("");
         phoneField.setText("");
@@ -211,6 +223,9 @@ public class PatientRegistrationScreen extends JFrame {
         genderCombo.setSelectedIndex(0);
     }
 
+    /**
+     * Checks if you want to cancel the registration
+     * **/
     private void handleCancel(){
         int choice = JOptionPane.showConfirmDialog(
                 this,

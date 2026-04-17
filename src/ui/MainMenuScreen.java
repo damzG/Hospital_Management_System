@@ -12,6 +12,7 @@ public class MainMenuScreen extends JFrame {
     /** The logged-in receptionist — used for the welcome message. */
     private final Receptionist receptionist;
 
+    /** The constructor used for the screen. */
     public MainMenuScreen(Receptionist receptionist){
         this.receptionist = receptionist;
 
@@ -31,6 +32,7 @@ public class MainMenuScreen extends JFrame {
         setVisible(true);
     }
 
+    /** The header method for the screen. */
     private JPanel createHeader() {
         JPanel header = new JPanel();
         header.setBackground(new Color(30, 144, 255)); //medical blue
@@ -55,6 +57,9 @@ public class MainMenuScreen extends JFrame {
         return header;
     }
 
+    /**
+     * The Main menu buttons
+     * **/
     private JPanel createMenu() {
         JPanel menu = new JPanel(new GridLayout(3,2,15,15));
         menu.setBorder(BorderFactory.createEmptyBorder(30,40,30,40));

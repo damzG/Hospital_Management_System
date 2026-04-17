@@ -19,18 +19,27 @@ class AppointmentDAOTest {
 
     private Connection conn;
 
+    /**
+     * Tests for setting up database connection
+     */
     @BeforeEach
     void setUp() throws SQLException {
         conn = DBconnect.getConnection();
         conn.setAutoCommit(false);
     }
 
+    /**
+     * Tests for tearing down database connection
+     */
     @AfterEach
     void tearDown() throws SQLException {
         conn.rollback();
         conn.close();
     }
 
+    /**
+     * Tests to check if the doctor is available (true)
+     */
     @Test
     @DisplayName("isDoctorAvailable returns true for unused slot")
     void testDoctorAvailableUnusedSlot() throws SQLException {
@@ -40,6 +49,9 @@ class AppointmentDAOTest {
         assertTrue(available);
     }
 
+    /**
+     * Tests to check if the doctor is unavailable (false)
+     */
     @Test
     @DisplayName("isDoctorAvailable returns false after booking same slot")
     void testDoctorUnavailableAfterBooking() throws SQLException {
@@ -51,6 +63,9 @@ class AppointmentDAOTest {
         assertTrue(AppointmentDAO.isDoctorAvailable(doctorId, testDate, slot));
     }
 
+    /**
+     * Tests to deactivate the appointment
+     */
     @Test
     @DisplayName("deactivateAppointment does not throw for unknown ID")
     void testDeactivate() {
@@ -58,6 +73,9 @@ class AppointmentDAOTest {
                 AppointmentDAO.deactivateAppointment(9999));
     }
 
+    /**
+     * Tests to get the AppointmentById
+     */
     @Test
     @DisplayName("getAppointmentById does not throw for unknown ID")
     void testGetById() {

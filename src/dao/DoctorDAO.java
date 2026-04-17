@@ -16,7 +16,6 @@ import java.util.List;
  * so appointment and prescription history is preserved.
  */
 
-
 public class DoctorDAO {
 
     /**

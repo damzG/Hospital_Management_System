@@ -36,19 +36,73 @@ public class Appointment {
         this.timeSlot       = timeSlot;
         this.receptionistId = receptionistId;
     }
-
+    /**
+     * getter for AppointmentId
+     * **/
     public int getAppointmentId()       { return appointmentId; }
+
+    /**
+     * setter for AppointmentId
+     * **/
     public void setAppointmentId(int id){ this.appointmentId = id; }
+
+    /**
+     * getter for PatientId
+     * **/
     public int getPatientID()           { return patientId; }
+
+    /**
+     * setter for Patient object
+     * **/
     public void setPatient(int patient) { this.patientId = patient; }
+
+    /**
+     * getter for DoctorID
+     * **/
     public int getDoctorID()            { return doctorId; }
+
+    /**
+     * setter for DoctorID
+     * **/
     public void setDoctorId(int doctor) { this.doctorId = doctor; }
+
+    /**
+     * getter for ReceptionistId
+     * **/
     public int getReceptionistId()      { return receptionistId; }
+
+    /**
+     * setter for ReceptionistId
+     * **/
     public void setReceptionistId(int r){ this.receptionistId = r; }
+
+    /**
+     * getter for Appointment Date
+     * **/
     public LocalDate getAppointment_date()              { return appointment_date; }
+
+    /**
+     * setter for Appointment Date
+     * **/
     public void setAppointment_date(LocalDate date)     { this.appointment_date = date; }
+
+    /**
+     * getter for Status
+     * **/
     public String getStatus()           { return status; }
+
+    /**
+     * setter for Status
+     * **/
     public void setStatus(String status){ this.status = status; }
+
+    /**
+     * getter for TimeSlot
+     * **/
     public String getTimeSlot()         { return timeSlot; }
+
+    /**
+     * setter for TimeSlot object
+     * **/
     public void setTimeSlot(String t)   { this.timeSlot = t; }
 }
