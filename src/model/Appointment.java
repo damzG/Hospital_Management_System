@@ -38,21 +38,25 @@ public class Appointment {
     }
     /**
      * getter for AppointmentId
+     * @return the appointment ID
      * **/
     public int getAppointmentId()       { return appointmentId; }
 
     /**
      * setter for AppointmentId
+     * @param  id - appointment id
      * **/
     public void setAppointmentId(int id){ this.appointmentId = id; }
 
     /**
      * getter for PatientId
+     * @return patientId
      * **/
     public int getPatientID()           { return patientId; }
 
     /**
      * setter for Patient object
+     *
      * **/
     public void setPatient(int patient) { this.patientId = patient; }
 
