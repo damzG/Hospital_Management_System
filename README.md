@@ -48,4 +48,4 @@ All actions performed within the system are reflected in the MySQL database in r
 3. Configure your MySQL connection in `db/DBConnection.java`
 4. Run the SQL script in `/database/hospital_db.sql` to set up the schema
 5. Build and run the project
-6. java -jar yourfile.jar for java files
+6. java -jar HMS26SETU.jar for java files
